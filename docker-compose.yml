@@ -1,0 +1,11 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: pizzaria-api-db
+    ports:
+      - "5433:5432"  # Porta 5433 no host mapeada para a porta 5432 no container
+    environment:
+      POSTGRES_DB: pizzaria-api
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
