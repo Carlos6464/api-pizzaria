@@ -1,4 +1,5 @@
-import { IsEmail, MaxLength, MinLength } from "class-validator";
+import { IsEmail, MaxLength, MinLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 /**
  * DTO para os dados de login do usuário.
@@ -13,6 +14,10 @@ export class UserLoginDto {
      * 
      * @example "user@example.com"
      */
+    @ApiProperty({
+        description: 'O e-mail do usuário.',
+        example: 'user@example.com',
+    })
     @IsEmail()
     email: string;
 
@@ -22,6 +27,12 @@ export class UserLoginDto {
      * 
      * @example "password"
      */
+    @ApiProperty({
+        description: 'A senha do usuário.',
+        example: 'password',
+        minLength: 3,
+        maxLength: 10,
+    })
     @MinLength(3)
     @MaxLength(10)
     password: string;
@@ -33,12 +44,16 @@ export class UserLoginDto {
  * Este DTO é usado para representar a resposta do processo de autenticação.
  * Inclui as informações do usuário autenticado e o token JWT gerado.
  */
-export interface AuthResponseDto {
+export class AuthResponseDto {
     /**
      * Identificador único do usuário.
      * 
      * @example "b2a5f5c7-3b9b-4f99-bb1e-9f5e2f8a1c9e"
      */
+    @ApiProperty({
+        description: 'Identificador único do usuário.',
+        example: 'b2a5f5c7-3b9b-4f99-bb1e-9f5e2f8a1c9e',
+    })
     id: string;
 
     /**
@@ -46,6 +61,10 @@ export interface AuthResponseDto {
      * 
      * @example "John Doe"
      */
+    @ApiProperty({
+        description: 'Nome do usuário.',
+        example: 'John Doe',
+    })
     name: string;
 
     /**
@@ -53,6 +72,10 @@ export interface AuthResponseDto {
      * 
      * @example "user@example.com"
      */
+    @ApiProperty({
+        description: 'E-mail do usuário.',
+        example: 'user@example.com',
+    })
     email: string;
 
     /**
@@ -60,6 +83,10 @@ export interface AuthResponseDto {
      * 
      * @example "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
      */
+    @ApiProperty({
+        description: 'Token JWT gerado.',
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+    })
     token: string;
 
     /**
@@ -67,5 +94,9 @@ export interface AuthResponseDto {
      * 
      * @example 3600
      */
+    @ApiProperty({
+        description: 'Tempo de expiração do token em segundos.',
+        example: 3600,
+    })
     expiresIn: number;
 }

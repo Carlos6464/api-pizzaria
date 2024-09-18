@@ -1,4 +1,5 @@
-import { IsOptional, IsString, MinLength } from "class-validator";
+import { IsOptional, IsString, MinLength } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 /**
  * DTO (Data Transfer Object) para a criação e atualização de produtos.
@@ -15,6 +16,11 @@ export class ProductDto {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Nome do produto.',
+        minLength: 3,
+        example: 'Pizza Margherita'
+    })
     @IsString()
     @MinLength(3)
     name: string;
@@ -26,6 +32,10 @@ export class ProductDto {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Preço do produto.',
+        example: '10.00'
+    })
     @IsString()
     price: string;
 
@@ -36,6 +46,10 @@ export class ProductDto {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Descrição do produto.',
+        example: 'Deliciosa pizza com molho de tomate e queijo.'
+    })
     @IsString()
     description: string;
 
@@ -46,6 +60,10 @@ export class ProductDto {
      * 
      * @type {string}
      */
+    @ApiPropertyOptional({
+        description: 'Nome do arquivo do banner do produto.',
+        example: 'banner-image.png'
+    })
     @IsString()
     @IsOptional()
     banner: string;
@@ -57,6 +75,10 @@ export class ProductDto {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'ID da categoria à qual o produto pertence.',
+        example: 'categoria-id'
+    })
     @IsString()
     category_id: string;
 }
@@ -67,12 +89,16 @@ export class ProductDto {
  * Este tipo é usado para descrever as propriedades de um arquivo de banner enviado, incluindo o nome
  * do arquivo, o nome original, a codificação, o tipo MIME, o tamanho e o conteúdo do arquivo em buffer.
  */
-export type bannerDto = {
+export class bannerDto {
     /**
      * Nome do campo do arquivo.
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Nome do campo do arquivo.',
+        example: 'banner'
+    })
     fieldname: string;
 
     /**
@@ -80,6 +106,10 @@ export type bannerDto = {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Nome do arquivo gerado.',
+        example: 'banner-1632432456.png'
+    })
     filename: string;
 
     /**
@@ -87,6 +117,10 @@ export type bannerDto = {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Nome original do arquivo.',
+        example: 'banner-image.png'
+    })
     originalname: string;
 
     /**
@@ -94,6 +128,10 @@ export type bannerDto = {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Codificação do arquivo.',
+        example: '7bit'
+    })
     encoding: string;
 
     /**
@@ -101,6 +139,10 @@ export type bannerDto = {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Tipo MIME do arquivo.',
+        example: 'image/png'
+    })
     mimetype: string;
 
     /**
@@ -108,6 +150,10 @@ export type bannerDto = {
      * 
      * @type {number}
      */
+    @ApiProperty({
+        description: 'Tamanho do arquivo em bytes.',
+        example: 1024
+    })
     size: number;
 
     /**
@@ -115,5 +161,10 @@ export type bannerDto = {
      * 
      * @type {Buffer}
      */
+    @ApiProperty({
+        description: 'Conteúdo do arquivo em buffer.',
+        type: 'string',
+        format: 'binary'
+    })
     buffer: Buffer;
 }

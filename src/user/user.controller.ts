@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto, UserRequest } from './user.dto';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -9,6 +10,7 @@ import { AuthGuard } from '../auth/auth.guard';
  *
  * Este controlador fornece endpoints para criar um usuário e para buscar detalhes de um usuário autenticado.
  */
+@ApiTags('user')
 @Controller('user')
 export class UserController {
     constructor(
@@ -22,6 +24,9 @@ export class UserController {
      * @returns {Promise<any>} Retorna uma promessa que resolve com o resultado da criação do usuário.
      */
     @Post()
+    @ApiOperation({ summary: 'Criar um novo usuário' })
+    @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
+    @ApiResponse({ status: 400, description: 'Dados inválidos ou erro na criação do usuário.' })
     async create(@Body() user: UserDto) {
         return await this.userService.create(user);
     }
@@ -37,9 +42,11 @@ export class UserController {
      */
     @UseGuards(AuthGuard)
     @Get('/detalhe')
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Recuperar detalhes do usuário autenticado' })
+    @ApiResponse({ status: 200, description: 'Detalhes do usuário recuperados com sucesso.' })
+    @ApiResponse({ status: 401, description: 'Não autorizado. Token inválido ou não fornecido.' })
     async findUser(@Req() request: UserRequest) {
-        //-- Adriano 22-08-2024
-        //-- acessar o id usuario pelo token no authGuard
         const user = request['user'];
         const userId = user?.sub; // Acesse o id do payload aqui
         return await this.userService.findByid(userId);

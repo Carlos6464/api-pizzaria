@@ -2,6 +2,7 @@ import { Body, Controller, Post, UseGuards, Get } from '@nestjs/common';
 import { CategoryDto } from './category.dto';
 import { CategoryService } from './category.service';
 import { AuthGuard } from '../auth/auth.guard';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 /**
  * Controlador para a entidade Categoria.
@@ -13,15 +14,17 @@ import { AuthGuard } from '../auth/auth.guard';
  * 
  * @uses AuthGuard - Garante que apenas usuários autenticados possam acessar os endpoints deste controlador.
  */
-@UseGuards(AuthGuard)
+@ApiTags('category')
+@ApiBearerAuth() // Indica que os endpoints exigem autenticação
 @Controller('category')
+@UseGuards(AuthGuard) // Aplicar o AuthGuard a todas as rotas deste controlador
 export class CategoryController {
 
     constructor(
         private readonly categoryService: CategoryService
     ){}
 
-   
+
    /**
      * Cria uma nova categoria.
      * 
@@ -31,7 +34,10 @@ export class CategoryController {
      * @returns A categoria criada, representada como um objeto CategoryDto.
      */
    @Post()
-   async create(@Body() category: CategoryDto){
+   @ApiOperation({ summary: 'Cria uma nova categoria' })
+   @ApiResponse({ status: 201, description: 'Categoria criada com sucesso.', type: CategoryDto })
+   @ApiResponse({ status: 400, description: 'Solicitação inválida.' })
+   async create(@Body() category: CategoryDto): Promise<CategoryDto> {
        return await this.categoryService.create(category);
    }
 
@@ -43,7 +49,10 @@ export class CategoryController {
     * @returns Uma promessa que resolve para um array de objetos CategoryDto, cada um representando uma categoria.
     */
    @Get()
-   async findAll(): Promise<CategoryDto[]>{
+   @ApiOperation({ summary: 'Recupera todas as categorias' })
+   @ApiResponse({ status: 200, description: 'Lista de categorias.', type: [CategoryDto] })
+   @ApiResponse({ status: 404, description: 'Nenhuma categoria encontrada.' })
+   async findAll(): Promise<CategoryDto[]> {
        return await this.categoryService.findAll();
    }
 }

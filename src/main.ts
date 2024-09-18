@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 /**
  * Função de inicialização da aplicação NestJS.
@@ -11,6 +12,20 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   // Cria a aplicação NestJS com o módulo principal
   const app = await NestFactory.create(AppModule);
+
+  const config = new DocumentBuilder()
+    .setTitle('API Pizzaria')
+    .setDescription('API destinada à criação de aplicações front-end e mobile para uma pizzaria. A API permite que os usuários façam pedidos e que os garçons utilizem a aplicação para gerenciar e realizar os pedidos.')
+    .setVersion('1.0')
+    .addTag('Pizzaria')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT'
+    })
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
   
   // Configura o ValidationPipe global para validação automática de DTOs e parâmetros
   app.useGlobalPipes(new ValidationPipe());

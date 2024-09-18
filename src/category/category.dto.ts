@@ -1,4 +1,5 @@
 import { IsOptional, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 /**
  * Data Transfer Object (DTO) para categorias.
@@ -17,6 +18,10 @@ export class CategoryDto {
      * 
      * @type {string}
      */
+    @ApiPropertyOptional({
+        description: 'Identificador único da categoria (UUID).',
+        example: '123e4567-e89b-12d3-a456-426614174000'
+    })
     @IsUUID()
     @IsOptional()
     id: string;
@@ -29,6 +34,10 @@ export class CategoryDto {
      * 
      * @type {string}
      */
+    @ApiProperty({
+        description: 'Nome da categoria, com um mínimo de 3 caracteres e máximo de 255.',
+        example: 'Eletrônicos'
+    })
     @IsString()
     @MinLength(3)
     @MaxLength(255)
