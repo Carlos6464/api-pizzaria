@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Get } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { CategoryDto } from './category.dto';
 import { CategoryService } from './category.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -14,7 +14,7 @@ import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagg
  * 
  * @uses AuthGuard - Garante que apenas usuários autenticados possam acessar os endpoints deste controlador.
  */
-@ApiTags('category')
+@ApiTags('categoria')
 @ApiBearerAuth() // Indica que os endpoints exigem autenticação
 @Controller('category')
 @UseGuards(AuthGuard) // Aplicar o AuthGuard a todas as rotas deste controlador
@@ -32,7 +32,7 @@ export class CategoryController {
      * 
      * @param category - O objeto CategoryDto que contém os dados da categoria a ser criada.
      * @returns A categoria criada, representada como um objeto CategoryDto.
-     */
+   */
    @Post()
    @ApiOperation({ summary: 'Cria uma nova categoria' })
    @ApiResponse({ status: 201, description: 'Categoria criada com sucesso.', type: CategoryDto })
@@ -53,6 +53,12 @@ export class CategoryController {
    @ApiResponse({ status: 200, description: 'Lista de categorias.', type: [CategoryDto] })
    @ApiResponse({ status: 404, description: 'Nenhuma categoria encontrada.' })
    async findAll(): Promise<CategoryDto[]> {
-       return await this.categoryService.findAll();
+        const categories = await this.categoryService.findAll();
+        if (!categories) {
+            throw new HttpException('Nenhuma categoria encontrada.', HttpStatus.NOT_FOUND);
+        }
+    
+        return categories;
+      
    }
 }

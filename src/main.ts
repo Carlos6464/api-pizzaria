@@ -13,6 +13,7 @@ async function bootstrap() {
   // Cria a aplicação NestJS com o módulo principal
   const app = await NestFactory.create(AppModule);
 
+  // configurando o swagger para gerar documentação
   const config = new DocumentBuilder()
     .setTitle('API Pizzaria')
     .setDescription('API destinada à criação de aplicações front-end e mobile para uma pizzaria. A API permite que os usuários façam pedidos e que os garçons utilizem a aplicação para gerenciar e realizar os pedidos.')

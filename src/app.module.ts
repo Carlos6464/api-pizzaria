@@ -9,6 +9,7 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { OrderModule } from './order/order.module';
 
 /**
  * Módulo principal da aplicação.
@@ -45,7 +46,8 @@ import { join } from 'path';
     UserModule,
     AuthModule,
     CategoryModule,
-    ProductModule
+    ProductModule,
+    OrderModule
   ],
   
   /**

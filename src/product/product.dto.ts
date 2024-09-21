@@ -168,3 +168,4 @@ export class bannerDto {
     })
     buffer: Buffer;
 }
+

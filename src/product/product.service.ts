@@ -17,11 +17,22 @@ export class ProductService {
                 id: true,
                 name: true,
                 price: true,
+                banner: true,
                 description: true,
                 category_id: true
             }
         })
 
         return newproduct;
+    }
+
+    async getBycatergoryProduct(categoryId: string){
+        const listProducts = await this.prismaService.product.findMany({
+            where: {
+                category_id: categoryId
+            }
+        })
+
+        return listProducts;
     }
 }

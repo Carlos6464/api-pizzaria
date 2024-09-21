@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, HttpStatus, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 import { bannerDto, ProductDto } from './product.dto';
@@ -13,7 +13,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
  * Este controlador fornece endpoints para criar produtos, incluindo o upload de arquivos de banner.
  * @uses AuthGuard - Garante que apenas usuários autenticados possam acessar os endpoints deste controlador.
  */
-@ApiTags('product')
+@ApiTags('produto')
 @ApiBearerAuth() // Indica que os endpoints exigem autenticação
 @Controller('product')
 @UseGuards(AuthGuard) // Aplicar o AuthGuard a todas as rotas deste controlador
@@ -76,9 +76,30 @@ export class ProductController {
         // Atualiza o DTO com o nome do arquivo gerado
         product.banner = file.filename;
 
-        console.log('Arquivo recebido:', file);
-        console.log('Produto recebido:', product);
-        
         return await this.productService.create(product);
     }
+
+    /**
+    * Recupera todas os produtos existentes por categoria.
+    * 
+    * Este método retorna uma lista de todas os produtos armazenadas por categoria.
+    * 
+    * @returns Uma promessa que resolve para um array de produtos, cada um representando uma produto.
+    */
+    @Get()
+    @ApiOperation({ summary: 'Recupera todos os produtos por categoria' })
+    @ApiResponse({ status: 200, description: 'Lista de produtos por categoria.' })
+    @ApiResponse({ status: 404, description: 'Nenhum produto encontrado para essa categoria.' })
+    async getBycatergoryProduct(@Query('category_id') category_id: string){
+        const products = await this.productService.getBycatergoryProduct(category_id);
+    
+        if (!products) {
+            throw new HttpException('Nenhum produto encontrado para essa categoria.', HttpStatus.NOT_FOUND);
+        }
+    
+        return products;
+    }
+
+
+
 }
