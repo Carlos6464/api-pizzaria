@@ -17,7 +17,7 @@ async function bootstrap() {
    app.enableCors({
     origin: 'http://localhost:3000', // Permite requisições de qualquer domínio
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos HTTP permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization',  'Accept'], // Cabeçalhos permitidos
     exposedHeaders: ['Authorization'], // Cabeçalhos que podem ser expostos ao frontend (opcional)
   });
 
