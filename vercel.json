@@ -12,9 +12,6 @@
       "src": "/(.*)",
       "dest": "dist/main.js"
     }
-  ],
-  "hooks": {
-    "postinstall": "npm run migrate"
-  }
+  ]
 }
   
