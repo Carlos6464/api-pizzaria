@@ -30,7 +30,7 @@ async function bootstrap() {
     })
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup('api/', app, document);
   
   // Configura o ValidationPipe global para validação automática de DTOs e parâmetros
   app.useGlobalPipes(new ValidationPipe());
