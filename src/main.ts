@@ -2,25 +2,28 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
 
-const server = express();
-
+/**
+ * Função de inicialização da aplicação NestJS.
+ * 
+ * Esta função cria uma instância da aplicação usando o módulo principal (`AppModule`),
+ * configura o `ValidationPipe` global para validar as solicitações e inicia o servidor na porta 3001.
+ */
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+  // Cria a aplicação NestJS com o módulo principal
+  const app = await NestFactory.create(AppModule);
 
   // Configurando CORS
   app.enableCors({
-    origin: '*', // Aceita qualquer origem
+    origin: '*', // Permitir requisições do frontend
     methods: 'GET,POST,PUT,DELETE',  // Métodos HTTP permitidos
     credentials: true,               // Permitir cookies e credenciais
   });
 
-  // Configuração do Swagger
+  // configurando o swagger para gerar documentação
   const config = new DocumentBuilder()
     .setTitle('API Pizzaria')
-    .setDescription('API para criar aplicações front-end e mobile para uma pizzaria.')
+    .setDescription('API destinada à criação de aplicações front-end e mobile para uma pizzaria. A API permite que os usuários façam pedidos e que os garçons utilizem a aplicação para gerenciar e realizar os pedidos.')
     .setVersion('1.0')
     .addTag('Pizzaria')
     .addBearerAuth({
@@ -29,18 +32,15 @@ async function bootstrap() {
       bearerFormat: 'JWT'
     })
     .build();
-  
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
-  // Configura o ValidationPipe global
+  
+  // Configura o ValidationPipe global para validação automática de DTOs e parâmetros
   app.useGlobalPipes(new ValidationPipe());
 
-  // Inicia a aplicação (Vercel usará a função exportada abaixo)
-  await app.init();
+  // Inicia o servidor na porta 3001
+  await app.listen(3001);
 }
 
-// Executa a função de inicialização da aplicação
+// Executa a função de bootstrap para iniciar a aplicação
 bootstrap();
-
-export default server;
