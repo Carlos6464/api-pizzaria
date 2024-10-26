@@ -13,15 +13,12 @@ async function bootstrap() {
   // Cria a aplicação NestJS com o módulo principal
   const app = await NestFactory.create(AppModule);
   
-   // // Configurando CORS
+   // Configurando CORS
    app.enableCors({
-    origin: '*', // Permitir requisições apenas desse domínio
-    methods: 'GET,POST,PUT,DELETE,OPTIONS', // Métodos HTTP permitidos
-    allowedHeaders: 'Content-Type, Authorization', // Cabeçalhos permitidos
-    exposedHeaders: 'Authorization', // Cabeçalhos que podem ser expostos ao frontend (opcional)
-    credentials: true, // Permitir cookies e credenciais
-    preflightContinue: false, // Para não permitir que o pré-vôo prossiga para o próximo middleware
-    optionsSuccessStatus: 204 // Código de status para resposta de sucesso ao pré-vôo (OPTIONS)
+    origin: '*', // Permite requisições de qualquer domínio
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos HTTP permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+    exposedHeaders: ['Authorization'], // Cabeçalhos que podem ser expostos ao frontend (opcional)
   });
 
   // configurando o swagger para gerar documentação
