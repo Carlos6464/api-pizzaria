@@ -12,10 +12,10 @@ import { CorsMiddleware } from './cors.middleware';
  */
 async function bootstrap() {
   // Cria a aplicação NestJS com o módulo principal
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {cors: true});
   
    // Configurando CORS
-   app.use(new CorsMiddleware().use);
+  //  app.use(new CorsMiddleware().use);
 
   // configurando o swagger para gerar documentação
   const config = new DocumentBuilder()
