@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { CorsMiddleware } from './cors.middleware';
 
 /**
  * Função de inicialização da aplicação NestJS.
@@ -14,12 +15,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
    // Configurando CORS
-   app.enableCors({
-    origin: 'http://localhost:3000', // Permite requisições de qualquer domínio
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos HTTP permitidos
-    allowedHeaders: ['Content-Type', 'Authorization',  'Accept'], // Cabeçalhos permitidos
-    exposedHeaders: ['Authorization'], // Cabeçalhos que podem ser expostos ao frontend (opcional)
-  });
+   app.use(new CorsMiddleware().use);
 
   // configurando o swagger para gerar documentação
   const config = new DocumentBuilder()
