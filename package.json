@@ -7,8 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "vercel-build": "prisma generate && prisma migrate deploy",
-    "prisma:generate": "prisma generate",
+    "migrate": "prisma migrate deploy",
+    "postinstall": "echo 'Running migrations...' && npm run migrate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
