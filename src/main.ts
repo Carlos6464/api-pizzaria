@@ -35,8 +35,8 @@ async function bootstrap() {
   // Configura o ValidationPipe global para validação automática de DTOs e parâmetros
   app.useGlobalPipes(new ValidationPipe());
 
-  // Inicia o servidor na porta 3001
-  await app.listen(3001);
+  // Inicia o servidor na porta 3000
+  await app.listen(process.env.PORT || 3000);
 }
 
 // Executa a função de bootstrap para iniciar a aplicação
