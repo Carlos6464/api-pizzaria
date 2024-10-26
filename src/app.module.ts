@@ -1,5 +1,5 @@
 import { PrismaModule } from './db/prisma.module';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -11,6 +11,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { OrderModule } from './order/order.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { CorsMiddleware } from './cors.middleware'; // Ajuste o caminho conforme necessário
 
 /**
  * Módulo principal da aplicação.
@@ -66,4 +67,10 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
    */
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CorsMiddleware) // Adiciona o middleware de CORS
+      .forRoutes('*'); // Aplica para todas as rotas
+  }
+}
