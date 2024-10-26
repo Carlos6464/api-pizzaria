@@ -15,7 +15,7 @@ async function bootstrap() {
 
   // Configurando CORS
   app.enableCors({
-    origin: '*', // Permitir requisições do frontend
+    origin: 'https://frontend-pizzaria-sigma.vercel.app', // Permitir requisições do frontend
     methods: 'GET,POST,PUT,DELETE',  // Métodos HTTP permitidos
     credentials: true,               // Permitir cookies e credenciais
   });
