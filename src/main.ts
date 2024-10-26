@@ -12,14 +12,6 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   // Cria a aplicação NestJS com o módulo principal
   const app = await NestFactory.create(AppModule);
-
-  // Configurando CORS
-  app.enableCors({
-    origin: 'https://frontend-pizzaria-sigma.vercel.app',
-    methods: 'GET,POST,PUT,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Authorization',  // Adicione headers personalizados, se necessário
-    credentials: true,
-  });
   
 
   // configurando o swagger para gerar documentação
