@@ -54,10 +54,6 @@ export class CategoryController {
    @ApiResponse({ status: 404, description: 'Nenhuma categoria encontrada.' })
    async findAll(): Promise<CategoryDto[]> {
         const categories = await this.categoryService.findAll();
-        if (!categories) {
-            throw new HttpException('Nenhuma categoria encontrada.', HttpStatus.NOT_FOUND);
-        }
-    
         return categories;
       
    }

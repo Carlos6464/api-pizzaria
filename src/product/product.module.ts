@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 /**
  * Módulo responsável pela gestão de produtos.
@@ -17,7 +18,7 @@ import { ProductController } from './product.controller';
    * 
    * Neste módulo, o `ProductService` é responsável pela manipulação de dados de produtos e interações com o banco de dados.
    */
-  providers: [ProductService],
+  providers: [ProductService,CloudinaryService ],
 
   /**
    * Lista de controladores que definem rotas e manipuladores de requisições HTTP.

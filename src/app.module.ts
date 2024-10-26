@@ -10,6 +10,7 @@ import { ProductModule } from './product/product.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { OrderModule } from './order/order.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 /**
  * Módulo principal da aplicação.
@@ -47,7 +48,8 @@ import { OrderModule } from './order/order.module';
     AuthModule,
     CategoryModule,
     ProductModule,
-    OrderModule
+    OrderModule,
+    CloudinaryModule
   ],
   
   /**
