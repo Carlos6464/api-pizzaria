@@ -8,6 +8,8 @@ export class CorsMiddleware implements NestMiddleware {
       // Verifica se a origem da requisição está na lista de permitidos
       if (allowedOrigins.includes(req.headers.origin)) {
         res.header('Access-Control-Allow-Origin', req.headers.origin);
+      }else{
+        res.header('Access-Control-Allow-Origin', "*");
       }
   
       // Configurações de CORS
