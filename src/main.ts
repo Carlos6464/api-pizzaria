@@ -15,10 +15,12 @@ async function bootstrap() {
 
   // Configurando CORS
   app.enableCors({
-    origin: 'https://frontend-pizzaria-sigma.vercel.app', // Permitir requisições do frontend
-    methods: 'GET,POST,PUT,DELETE',  // Métodos HTTP permitidos
-    credentials: true,               // Permitir cookies e credenciais
+    origin: 'https://frontend-pizzaria-sigma.vercel.app',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',  // Adicione headers personalizados, se necessário
+    credentials: true,
   });
+  
 
   // configurando o swagger para gerar documentação
   const config = new DocumentBuilder()
