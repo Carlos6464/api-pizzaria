@@ -60,6 +60,7 @@ export class ProductController {
     @ApiResponse({ status: 201, description: 'Produto criado com sucesso.' })
     @ApiResponse({ status: 400, description: 'Arquivo de banner obrigatório não enviado.' })
     async create(@UploadedFile() file: Express.Multer.File, @Body() product: ProductDto) {
+       
         // Verifica se o arquivo foi enviado
         if (!file) {
             // Lança um erro se o arquivo não for enviado

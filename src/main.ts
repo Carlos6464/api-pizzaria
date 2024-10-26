@@ -36,7 +36,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   // Inicia o servidor na porta 3000
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(process.env.PORT || 3333);
 }
 
 // Executa a função de bootstrap para iniciar a aplicação
